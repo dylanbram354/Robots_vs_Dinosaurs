@@ -5,7 +5,8 @@ class Robot:
         self.name = name
         self.power_level = 100
         self.health = 100
-        self.weapon = Weapon
+        self.weapon = Weapon('big scary laser gun', 20)
 
     def attack(self, dinosaur):
         dinosaur.health -= self.Weapon.attack_power
+        self.power_level -= 10
