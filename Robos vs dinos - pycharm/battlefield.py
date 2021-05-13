@@ -12,6 +12,8 @@ class Battlefield:
     def display_welcome(self):
         print('Welcome to the game!')
 
+    # The next few functions generate a game automatically, with randomly selected dinos/robots for each turn (no user control).
+
     def generate_teams(self):
         self.fleet.create_fleet()
         self.herd.create_herd()
@@ -52,8 +54,6 @@ class Battlefield:
         else:
             print(f'{current_dino.type} energy now {current_dino.energy}')
 
-
-
     def robot_turn(self):
         dino_index = random.randint(0, len(self.herd.dinosaurs)-1)
         robot_index = random.randint(0, len(self.fleet.robots)-1)
@@ -78,16 +78,6 @@ class Battlefield:
         else:
             print(f'{current_robot.name} power level now {current_robot.power_level}')
 
-    def user_fleet_builder(self):
-        amount_of_robots = input("How many bots do you want on your team? Max 5 ")
-        amount_of_robots = int(amount_of_robots)
-        if amount_of_robots > 5:
-            amount_of_robots = 5
-        self.fleet.user_fleet(amount_of_robots)
-
-    def user_robot_turn(self):
-        pass
-
     def run_game(self):
         self.display_welcome()
         self.generate_teams()
@@ -100,10 +90,47 @@ class Battlefield:
         if len(self.fleet.robots) == 0:
             print('Dinosaurs win!')
 
+    # These functions begin to take user input to control aspects of the game. They'll play as Team Robot.
+    
+    def user_fleet_builder(self):
+        amount_of_robots = input("How many bots do you want on your team? Max 5 ")
+        amount_of_robots = int(amount_of_robots)
+        if amount_of_robots > 5:
+            amount_of_robots = 5
+        self.fleet.user_fleet(amount_of_robots)
+
+    def user_robot_turn(self):
+        pass
+
+    def show_info_team_robot(self):
+        print(f'\nHere is your fleet: ')
+        i = 0
+        while i < len(self.fleet.robots):
+            name = self.fleet.robots[i].name
+            weapon = self.fleet.robots[i].weapon.type
+            attack_power = self.fleet.robots[i].weapon.attack_power
+            print(f'{name}, {weapon}, attack power {attack_power}')
+            i += 1
+        dino_amount = input('How many dinosaurs do you want to fight?')
+        dino_amount = int(dino_amount)
+        self.herd.create_herd_custom_amount(dino_amount)
+        print('\nHere is Team Dinosaur: ')
+        i = 0
+        while i < len(self.herd.dinosaurs):
+            name = self.herd.dinosaurs[i].type
+            attack_power = self.herd.dinosaurs[i].attack_power
+            print(f'{name}, attack power {attack_power}')
+            i += 1
+
     def run_game_team_robots(self):
         self.display_welcome()
         print('You are Team Robot!')
         self.user_fleet_builder()
+        self.show_info_team_robot()
+
+
+
+
 
 
 
