@@ -3,7 +3,9 @@ from robot import Robot
 
 class Fleet:
     def __init__(self):
-        robot_one = Robot('Optimus Prime')
-        robot_two = Robot('Godzilla-bot')
-        robot_three = Robot('King Kong-bot')
-        self.robots = [robot_one, robot_two, robot_three]
+        self.robots = []
+
+    def create_fleet(self):
+        self.robots.append(Robot('Optimus Prime'))
+        self.robots.append(Robot('Godzilla-bot'))
+        self.robots.append(Robot('King Kong-bot'))
