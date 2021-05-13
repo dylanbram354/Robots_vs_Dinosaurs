@@ -81,7 +81,8 @@ class Battlefield:
         self.display_welcome()
         while len(self.herd.dinosaurs) > 0 and len(self.fleet.robots) > 0:
             self.dino_turn()
-            self.robot_turn()
+            if len(self.fleet.robots) > 0:
+                self.robot_turn()
         if len(self.herd.dinosaurs) == 0:
             print('Robots win!')
         if len(self.fleet.robots) == 0:
