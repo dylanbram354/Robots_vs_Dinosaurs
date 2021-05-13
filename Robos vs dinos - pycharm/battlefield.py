@@ -91,7 +91,7 @@ class Battlefield:
             print('Dinosaurs win!')
 
     # These functions begin to take user input to control aspects of the game. They'll play as Team Robot.
-    
+
     def user_fleet_builder(self):
         amount_of_robots = input("How many bots do you want on your team? Max 5 ")
         amount_of_robots = int(amount_of_robots)
@@ -102,16 +102,16 @@ class Battlefield:
     def user_robot_turn(self):
         pass
 
-    def show_info_team_robot(self):
-        print(f'\nHere is your fleet: ')
+    def team_setup(self):
+        print(f'\nHere is Team Robot: ')
         i = 0
         while i < len(self.fleet.robots):
             name = self.fleet.robots[i].name
             weapon = self.fleet.robots[i].weapon.type
             attack_power = self.fleet.robots[i].weapon.attack_power
-            print(f'{name}, {weapon}, attack power {attack_power}')
+            print(f'Robot {i+1}: {name}, {weapon}, attack power {attack_power}')
             i += 1
-        dino_amount = input('How many dinosaurs do you want to fight?')
+        dino_amount = input('\nHow many dinosaurs do you want to fight?')
         dino_amount = int(dino_amount)
         self.herd.create_herd_custom_amount(dino_amount)
         print('\nHere is Team Dinosaur: ')
@@ -122,11 +122,76 @@ class Battlefield:
             print(f'{name}, attack power {attack_power}')
             i += 1
 
+    def show_team_info(self):
+        print(f'\nHere is Team Robot: ')
+        i = 0
+        while i < len(self.fleet.robots):
+            name = self.fleet.robots[i].name
+            weapon = self.fleet.robots[i].weapon.type
+            attack_power = self.fleet.robots[i].weapon.attack_power
+            health = self.fleet.robots[i].health
+            power_level = self.fleet.robots[i].power_level
+            print(f'Robot {i + 1}: {name}, {weapon}, attack power {attack_power}, health {health}, power level {power_level}')
+            i += 1
+        print('\nHere is Team Dinosaur: ')
+        i = 0
+        while i < len(self.herd.dinosaurs):
+            name = self.herd.dinosaurs[i].type
+            attack_power = self.herd.dinosaurs[i].attack_power
+            health = self.herd.dinosaurs[i].health
+            energy = self.herd.dinosaurs[i].energy
+            print(f'{name}, attack power {attack_power}, health {health}, energy {energy}')
+            i += 1
+
+    def user_robot_turn(self):
+        robot_index = input('\nWhich robot do you want to use this turn? Enter their Robot Number ')
+        dino_index = input('\nWhich dinosaur do you want to attack? Enter their Dinosaur Number ')
+
+        robot_index = int(robot_index)-1
+        dino_index = int(dino_index)-1
+
+        current_dino = self.herd.dinosaurs[dino_index]
+        current_robot = self.fleet.robots[robot_index]
+
+        print(f'\n{current_robot.name} attacks {current_dino.type}!')
+
+        Robot.attack(current_robot, current_dino)
+
+        if current_dino.health <= 0:
+            print(f'{current_dino.type} health now depleted! {current_dino.type} OUT!')
+            self.herd.dinosaurs.remove(current_dino)
+        else:
+            print(f'{current_dino.type} health now {current_dino.health}')
+
+        if current_robot.power_level <= 0:
+            print(f'{current_robot.name} power level now depleted! {current_robot.name} OUT!')
+            self.fleet.robots.remove(current_robot)
+
+        else:
+            print(f'{current_robot.name} power level now {current_robot.power_level}')
+
+
     def run_game_team_robots(self):
         self.display_welcome()
         print('You are Team Robot!')
         self.user_fleet_builder()
-        self.show_info_team_robot()
+        self.team_setup()
+
+        # self.user_robot_turn()
+        # self.show_team_info()
+        # self.dino_turn()
+        user_ready = 'yes'
+        while len(self.herd.dinosaurs) > 0 and len(self.fleet.robots) > 0 and user_ready == 'yes':
+            self.user_robot_turn()
+            user_ready = input('\nReady for next turn? Enter "yes" if ready ')
+            if len(self.herd.dinosaurs) > 0:
+                self.dino_turn()
+                user_ready = input('\nReady for next turn? Enter "yes" if ready ')
+                self.show_team_info()
+        if len(self.herd.dinosaurs) == 0:
+            print('Robots win!')
+        if len(self.fleet.robots) == 0:
+            print('Dinosaurs win!')
 
 
 
