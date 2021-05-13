@@ -12,6 +12,7 @@ class Battlefield:
     def display_welcome(self):
         print('Welcome to the game!')
 
+    def generate_teams(self):
         self.fleet.create_fleet()
         self.herd.create_herd()
 
@@ -77,8 +78,19 @@ class Battlefield:
         else:
             print(f'{current_robot.name} power level now {current_robot.power_level}')
 
+    def user_fleet_builder(self):
+        amount_of_robots = input("How many bots do you want on your team? Max 5 ")
+        amount_of_robots = int(amount_of_robots)
+        if amount_of_robots > 5:
+            amount_of_robots = 5
+        self.fleet.user_fleet(amount_of_robots)
+
+    def user_robot_turn(self):
+        pass
+
     def run_game(self):
         self.display_welcome()
+        self.generate_teams()
         while len(self.herd.dinosaurs) > 0 and len(self.fleet.robots) > 0:
             self.dino_turn()
             if len(self.fleet.robots) > 0:
@@ -88,7 +100,10 @@ class Battlefield:
         if len(self.fleet.robots) == 0:
             print('Dinosaurs win!')
 
-
+    def run_game_team_robots(self):
+        self.display_welcome()
+        print('You are Team Robot!')
+        self.user_fleet_builder()
 
 
 
