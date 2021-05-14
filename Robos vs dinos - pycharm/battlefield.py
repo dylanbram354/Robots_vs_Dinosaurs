@@ -150,7 +150,7 @@ class Battlefield:
             attack_power = self.herd.dinosaurs[i].attack_power
             health = self.herd.dinosaurs[i].health
             energy = self.herd.dinosaurs[i].energy
-            print(f'{name}, attack power {attack_power}, health {health}, energy {energy}')
+            print(f'{name}: attack power {attack_power}, health {health}, energy {energy}')
             i += 1
 
     def user_robot_turn(self):
@@ -172,8 +172,8 @@ class Battlefield:
                     print("Oops! No robots with that name. Try again... ")
         user_select = ''
         while user_select != 'attack' and user_select != 'heal':
-            user_select = input(f'\nWould you like to attack a dinosaur, or heal your robot by 10 points? '
-                                f'Healing costs 10 energy. '
+            user_select = input(f'\nWould you like to attack a dinosaur, or heal your robot? '
+                                f'Healing adds a random number of health points from 5-20, but it costs 15 energy! '
                                 f'Enter "attack" or "heal" ')
             if user_select != 'attack' and user_select != 'heal':
                 print(f'\nInvalid input! Try again...')
@@ -183,13 +183,14 @@ class Battlefield:
             self.user_robot_attack(current_robot)
 
     def user_robot_heal(self, robot):
-        robot.health += 10
+        health_gain = random.randint(5, 20)
+        robot.health += health_gain
         if robot.health > 100:
             print(f'{robot.name} health maxed out!')
             robot.health = 100
         else:
-            print(f'\n{robot.name} health now {robot.health}!')
-        robot.power_level -= 10
+            print(f'\n{robot.name} gains {health_gain} health. {robot.name} health now {robot.health}!')
+        robot.power_level -= 15
         if robot.power_level > 0:
             print(f'\n{robot.name} power level now {robot.power_level}!')
         elif robot.power_level <= 0:
@@ -209,7 +210,8 @@ class Battlefield:
                         print(f"Oops! No dinosaur with that number. Dinosaur {dino_index + 1} selected by default.")
                     break
                 except ValueError:
-                    print("Oops! Make sure to enter the number corresponding to the dino you want to attack. Try again...")
+                    print("Oops! Make sure to enter the number corresponding to the dino you want to attack. "
+                          "Try again...")
 
             current_dino = self.herd.dinosaurs[dino_index]
 
@@ -241,7 +243,7 @@ class Battlefield:
             user_ready = input('\nReady for next turn? Enter "yes" when ready ')
             while user_ready != "yes":
                 user_ready = input('\nReady for next turn? Enter "yes" when ready ')
-            if len(self.herd.dinosaurs) > 0 and user_ready == 'yes':
+            if len(self.herd.dinosaurs) > 0:
                 self.dino_turn()
                 if len(self.fleet.robots) > 0:
                     user_ready = input('\nReady for next turn? Enter "yes" when ready ')

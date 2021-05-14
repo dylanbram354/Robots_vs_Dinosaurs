@@ -22,6 +22,5 @@ if __name__ == '__main__':
     if user_choice == 'no':
         print('Thanks for playing!')
 
-    # Dinosaur('dino', 25).attack(Robot('hi'))
 
 

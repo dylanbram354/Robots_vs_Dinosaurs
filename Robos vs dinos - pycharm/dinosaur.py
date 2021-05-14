@@ -10,10 +10,10 @@ class Dinosaur:
         self.energy_drain = energy_drain
 
     def attack(self, robot):
-        attack_types = ('claw', 'bite', 'tail', 'kick', 'special')
+        attack_types = ('claw', 'bite', 'tail', 'kick', 'SPECIAL')
         attack = random.choice(attack_types)
         attack_statement = f'{self.type} uses {attack} attack against {robot.name}!'
-        if attack == 'special':
+        if attack == 'SPECIAL':
             attack_statement += f'\nIt does extra damage! But, it drains more energy...'
             robot.health -= self.attack_power + 10
             self.energy += self.energy_drain - 10
