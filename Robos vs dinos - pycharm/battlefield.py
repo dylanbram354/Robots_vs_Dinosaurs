@@ -94,9 +94,15 @@ class Battlefield:
     # These functions begin to take user input to control aspects of the game. They'll play as Team Robot.
 
     def user_fleet_builder(self):
-        amount_of_robots = input("How many bots do you want on your team? Max 5 ")
-        amount_of_robots = int(amount_of_robots)
+        while True:
+            try:
+                amount_of_robots = input("How many bots do you want on your team? Max 5 ")
+                amount_of_robots = int(amount_of_robots)
+                break
+            except ValueError:
+                print("Oops! Enter a number from 1 to 5. ")
         if amount_of_robots > 5:
+            print('Oops! That number was greater than the maximum allowed. Your fleet has been set to 5 robots.')
             amount_of_robots = 5
         self.fleet.user_fleet(amount_of_robots)
 
@@ -110,17 +116,24 @@ class Battlefield:
             name = self.fleet.robots[i].name
             weapon = self.fleet.robots[i].weapon.type
             attack_power = self.fleet.robots[i].weapon.attack_power
-            print(f'Robot {i + 1}: {name}, {weapon}, attack power {attack_power}')
+            energy_drain = self.fleet.robots[i].weapon.energy_drain
+            print(f'Robot {i + 1}: {name}, {weapon}, attack power {attack_power}, energy drain per attack {energy_drain}')
             i += 1
-        dino_amount = input('\nHow many dinosaurs do you want to fight?')
-        dino_amount = int(dino_amount)
+        while True:
+            try:
+                dino_amount = input('\nHow many dinosaurs do you want to fight?')
+                dino_amount = int(dino_amount)
+                break
+            except ValueError:
+                print('Oops! Enter the number of dinosaurs you want to fight. ')
         self.herd.create_herd_custom_amount(dino_amount)
         print('\nHere is Team Dinosaur: ')
         i = 0
         while i < len(self.herd.dinosaurs):
             name = self.herd.dinosaurs[i].type
             attack_power = self.herd.dinosaurs[i].attack_power
-            print(f'{name}, attack power {attack_power}')
+            energy_drain = self.herd.dinosaurs[i].energy_drain
+            print(f'{name}, attack power {attack_power}, energy drain per attack {energy_drain}')
             i += 1
 
     def show_team_info(self):
@@ -177,7 +190,6 @@ class Battlefield:
             print(f'{current_robot.name} power level now {current_robot.power_level}')
 
     def run_game_team_robots(self):
-        self.display_welcome()
         print('You are Team Robot!')
         self.user_fleet_builder()
         self.team_setup()

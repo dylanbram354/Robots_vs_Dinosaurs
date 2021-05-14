@@ -15,4 +15,9 @@ class Herd:
         i = 1
         while i <= amount:
             self.dinosaurs.append(Dinosaur(f'Dinosaur {i}', random.randint(15, 35)))
+            if 25 <= self.dinosaurs[i - 1].attack_power <= 30:
+                self.dinosaurs[i-1].energy_drain = -15
+            elif self.dinosaurs[i-1].attack_power > 30:
+                self.dinosaurs[i-1].energy_drain = -20
             i += 1
+

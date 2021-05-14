@@ -20,7 +20,7 @@ class Robot:
         print(f"Choose this robot's weapon:")
         i = 1
         while i <= len(options):
-            print(f"Option {i}: {options[i-1].type}, attack power {options[i-1].attack_power}, energy drain {options[i-1].energy_drain}")
+            print(f"Option {i}: {options[i-1].type}, attack power {options[i-1].attack_power}, energy drain per attack {options[i-1].energy_drain}")
             i += 1
         user_choice = input('Enter your choice. For Option 1, enter 1. Etc... ')
         user_choice = int(user_choice)-1
