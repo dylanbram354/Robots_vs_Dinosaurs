@@ -146,10 +146,14 @@ class Battlefield:
             i += 1
 
     def user_robot_turn(self):
-        robot_index = input('\nWhich robot do you want to use this turn? Enter their Robot Number ')
+        robot_input = input('\nWhich robot do you want to use this turn? ')
         dino_index = input('\nWhich dinosaur do you want to attack? Enter their Dinosaur Number ')
 
-        robot_index = int(robot_index) - 1
+        i = 0
+        while i < len(self.fleet.robots):
+            if robot_input == self.fleet.robots[i].name:
+                robot_index = i
+            i += 1
         dino_index = int(dino_index) - 1
 
         current_dino = self.herd.dinosaurs[dino_index]
