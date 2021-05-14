@@ -5,9 +5,10 @@ from dinosaur import Dinosaur
 
 
 if __name__ == '__main__':
-    user_choice = input('Welcome to the game! Do you want to auto-generate a game, '
+    user_choice = input('\nWelcome to the Robots vs Dinosaurs! '
+                        '\n\nDo you want to auto-generate a game, '
                         'or do you want to play as Team Robot?'
-                        ' (enter "auto"/"robot") ')
+                        ' (enter "auto" or "robot") ')
 
     while user_choice == 'auto' or user_choice == 'robot' or user_choice != 'no':
         if user_choice == 'auto':

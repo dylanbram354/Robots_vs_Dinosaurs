@@ -99,8 +99,8 @@ class Battlefield:
                 break
             except ValueError:
                 print("\nOops! Enter a number from 1 to 5. ")
-        if amount_of_robots > 5:
-            print('\nOops! That number was greater than the maximum allowed. Your fleet has been set to 5 robots.')
+        if amount_of_robots > 5 or amount_of_robots <= 0:
+            print('\nOops! That number was outside the available range. Your fleet has been set to 5 robots.')
             amount_of_robots = 5
         self.fleet.user_fleet(amount_of_robots)
 
@@ -212,8 +212,9 @@ class Battlefield:
                 try:
                     dino_index = int(dino_index) - 1
                     if dino_index >= len(self.herd.dinosaurs):
-                        dino_index = len(self.herd.dinosaurs) - 1
-                        print(f"\nOops! No dinosaur with that number. Dinosaur {dino_index + 1} selected by default.")
+                        dino_index = random.randint(0, len(self.herd.dinosaurs) - 1)
+                        print(f"\nOops! No dinosaur with that number. Dinosaur {dino_index} "
+                              f"randomly selected.")
                     break
                 except ValueError:
                     print("\nOops! Make sure to enter the number corresponding to the dino you want to attack. "

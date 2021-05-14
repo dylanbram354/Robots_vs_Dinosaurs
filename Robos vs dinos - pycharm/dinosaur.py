@@ -2,7 +2,7 @@ import random
 
 
 class Dinosaur:
-    def __init__(self, type, attack_power, energy_drain = -10):
+    def __init__(self, type, attack_power, energy_drain=-10):
         self.type = type
         self.energy = 100
         self.attack_power = attack_power
