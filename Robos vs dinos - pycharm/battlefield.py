@@ -4,6 +4,7 @@ from dinosaur import Dinosaur
 from robot import Robot
 import random
 
+
 class Battlefield:
     def __init__(self):
         self.fleet = Fleet()
@@ -31,8 +32,8 @@ class Battlefield:
             i += 1
 
     def dino_turn(self):
-        dino_index = random.randint(0, len(self.herd.dinosaurs)-1)
-        robot_index = random.randint(0, len(self.fleet.robots)-1)
+        dino_index = random.randint(0, len(self.herd.dinosaurs) - 1)
+        robot_index = random.randint(0, len(self.fleet.robots) - 1)
 
         current_dino = self.herd.dinosaurs[dino_index]
         current_robot = self.fleet.robots[robot_index]
@@ -55,8 +56,8 @@ class Battlefield:
             print(f'{current_dino.type} energy now {current_dino.energy}')
 
     def robot_turn(self):
-        dino_index = random.randint(0, len(self.herd.dinosaurs)-1)
-        robot_index = random.randint(0, len(self.fleet.robots)-1)
+        dino_index = random.randint(0, len(self.herd.dinosaurs) - 1)
+        robot_index = random.randint(0, len(self.fleet.robots) - 1)
 
         current_dino = self.herd.dinosaurs[dino_index]
         current_robot = self.fleet.robots[robot_index]
@@ -109,7 +110,7 @@ class Battlefield:
             name = self.fleet.robots[i].name
             weapon = self.fleet.robots[i].weapon.type
             attack_power = self.fleet.robots[i].weapon.attack_power
-            print(f'Robot {i+1}: {name}, {weapon}, attack power {attack_power}')
+            print(f'Robot {i + 1}: {name}, {weapon}, attack power {attack_power}')
             i += 1
         dino_amount = input('\nHow many dinosaurs do you want to fight?')
         dino_amount = int(dino_amount)
@@ -131,7 +132,8 @@ class Battlefield:
             attack_power = self.fleet.robots[i].weapon.attack_power
             health = self.fleet.robots[i].health
             power_level = self.fleet.robots[i].power_level
-            print(f'Robot {i + 1}: {name}, {weapon}, attack power {attack_power}, health {health}, power level {power_level}')
+            print(
+                f'Robot {i + 1}: {name}, {weapon}, attack power {attack_power}, health {health}, power level {power_level}')
             i += 1
         print('\nHere is Team Dinosaur: ')
         i = 0
@@ -147,8 +149,8 @@ class Battlefield:
         robot_index = input('\nWhich robot do you want to use this turn? Enter their Robot Number ')
         dino_index = input('\nWhich dinosaur do you want to attack? Enter their Dinosaur Number ')
 
-        robot_index = int(robot_index)-1
-        dino_index = int(dino_index)-1
+        robot_index = int(robot_index) - 1
+        dino_index = int(dino_index) - 1
 
         current_dino = self.herd.dinosaurs[dino_index]
         current_robot = self.fleet.robots[robot_index]
@@ -170,16 +172,12 @@ class Battlefield:
         else:
             print(f'{current_robot.name} power level now {current_robot.power_level}')
 
-
     def run_game_team_robots(self):
         self.display_welcome()
         print('You are Team Robot!')
         self.user_fleet_builder()
         self.team_setup()
 
-        # self.user_robot_turn()
-        # self.show_team_info()
-        # self.dino_turn()
         user_ready = 'yes'
         while len(self.herd.dinosaurs) > 0 and len(self.fleet.robots) > 0 and user_ready == 'yes':
             self.user_robot_turn()
@@ -192,14 +190,3 @@ class Battlefield:
             print('Robots win!')
         if len(self.fleet.robots) == 0:
             print('Dinosaurs win!')
-
-
-
-
-
-
-
-
-
-
-

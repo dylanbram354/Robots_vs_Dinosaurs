@@ -15,7 +15,8 @@ class Fleet:
         i = 1
         while i <= amount:
             robot_name = input(f'Robot {i} - enter name: ')
-            Robot(robot_name).weapon = Robot(robot_name).choose_weapon()
             self.robots.append(Robot(robot_name))
+            self.robots[i-1].choose_weapon()
             i += 1
+
 

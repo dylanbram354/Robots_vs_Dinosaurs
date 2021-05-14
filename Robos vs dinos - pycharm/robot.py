@@ -25,6 +25,6 @@ class Robot:
         user_choice = input('Enter your choice. For Option 1, enter 1. Etc... ')
         user_choice = int(user_choice)-1
         chosen_weapon = options[user_choice]
-        return chosen_weapon
+        self.weapon = chosen_weapon
 
 
