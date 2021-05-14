@@ -22,8 +22,16 @@ class Robot:
         while i <= len(options):
             print(f"Option {i}: {options[i-1].type}, attack power {options[i-1].attack_power}, energy drain per attack {options[i-1].energy_drain}")
             i += 1
-        user_choice = input('Enter your choice. For Option 1, enter 1. Etc... ')
-        user_choice = int(user_choice)-1
+        while True:
+            try:
+                user_choice = input('Enter your choice. For Option 1, enter 1. Etc... ')
+                user_choice = int(user_choice) - 1
+                if user_choice >= len(options) or user_choice < 0:
+                    user_choice = len(options) - 1
+                    print(f"Oops! That number wasn't an option. Option {user_choice + 1} selected by default.")
+                break
+            except ValueError:
+                print("Oops! Enter a number corresponding with the weapon you want to assign.")
         chosen_weapon = options[user_choice]
         self.weapon = chosen_weapon
 

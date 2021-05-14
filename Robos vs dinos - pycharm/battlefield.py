@@ -159,18 +159,38 @@ class Battlefield:
             i += 1
 
     def user_robot_turn(self):
-        robot_input = input('\nWhich robot do you want to use this turn? ')
-        dino_index = input('\nWhich dinosaur do you want to attack? Enter their Dinosaur Number ')
+        if len(self.fleet.robots) == 1:
+            current_robot = self.fleet.robots[0].name
+        else:
+            while True:
+                robot_input = input('\nWhich robot do you want to use this turn? ')
+                try:
+                    robot_index = 6
+                    i = 0
+                    while i < len(self.fleet.robots):
+                        if robot_input == self.fleet.robots[i].name:
+                            robot_index = i
+                        i += 1
+                    current_robot = self.fleet.robots[robot_index]
+                    break
+                except IndexError:
+                    print("Oops! No robots with that name. Try again... ")
 
-        i = 0
-        while i < len(self.fleet.robots):
-            if robot_input == self.fleet.robots[i].name:
-                robot_index = i
-            i += 1
-        dino_index = int(dino_index) - 1
+        if len(self.herd.dinosaurs) == 1:
+            current_dino = self.herd.dinosaurs[0]
+        else:
+            while True:
+                dino_index = input('\nWhich dinosaur do you want to attack? Enter their Dinosaur Number ')
+                try:
+                    dino_index = int(dino_index) - 1
+                    if dino_index >= len(self.herd.dinosaurs):
+                        dino_index = len(self.herd.dinosaurs) - 1
+                        print(f"Oops! No dinosaur with that number. Dinosaur {dino_index + 1} selected by default.")
+                    break
+                except ValueError:
+                    print("Oops! Make sure to enter the number corresponding to the dino you want to attack. Try again...")
 
-        current_dino = self.herd.dinosaurs[dino_index]
-        current_robot = self.fleet.robots[robot_index]
+            current_dino = self.herd.dinosaurs[dino_index]
 
         print(f'\n{current_robot.name} attacks {current_dino.type}!')
 
@@ -197,11 +217,17 @@ class Battlefield:
         user_ready = 'yes'
         while len(self.herd.dinosaurs) > 0 and len(self.fleet.robots) > 0 and user_ready == 'yes':
             self.user_robot_turn()
-            user_ready = input('\nReady for next turn? Enter "yes" if ready ')
-            if len(self.herd.dinosaurs) > 0:
+            user_ready = input('\nReady for next turn? Enter "yes" when ready ')
+            while user_ready != "yes":
+                user_ready = input('\nReady for next turn? Enter "yes" when ready ')
+            if len(self.herd.dinosaurs) > 0 and user_ready == 'yes':
                 self.dino_turn()
-                user_ready = input('\nReady for next turn? Enter "yes" if ready ')
-                self.show_team_info()
+                if len(self.fleet.robots) > 0:
+                    user_ready = input('\nReady for next turn? Enter "yes" when ready ')
+                    while user_ready != "yes":
+                        user_ready = input('\nReady for next turn? Enter "yes" when ready ')
+                    self.show_team_info()
+
         if len(self.herd.dinosaurs) == 0:
             print('Robots win!')
         if len(self.fleet.robots) == 0:
