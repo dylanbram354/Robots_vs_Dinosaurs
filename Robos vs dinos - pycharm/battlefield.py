@@ -38,7 +38,6 @@ class Battlefield:
         current_dino = self.herd.dinosaurs[dino_index]
         current_robot = self.fleet.robots[robot_index]
 
-        # print(f'\n{current_dino.type} attacks {current_robot.name}!')
         print("\n" + Dinosaur.attack(current_dino, current_robot))
 
         if current_robot.health <= 0:
@@ -49,7 +48,7 @@ class Battlefield:
 
         if current_dino.energy <= 0:
             print(f'{current_dino.type} energy now depleted! {current_dino.type} OUT!')
-            self.herd.dinosaurs.remove(current_robot)
+            self.herd.dinosaurs.remove(current_dino)
 
         else:
             print(f'{current_dino.type} energy now {current_dino.energy}')
@@ -117,7 +116,7 @@ class Battlefield:
             i += 1
         while True:
             try:
-                dino_amount = input('\nHow many dinosaurs do you want to fight?')
+                dino_amount = input('\nHow many dinosaurs do you want to fight? ')
                 dino_amount = int(dino_amount)
                 break
             except ValueError:
@@ -171,7 +170,27 @@ class Battlefield:
                     break
                 except IndexError:
                     print("Oops! No robots with that name. Try again... ")
+        user_select = ''
+        while user_select != 'attack' and user_select != 'heal':
+            user_select = input(f'\nWould you like to attack a dinosaur, or heal your robot by 10 points? '
+                                f'Healing costs 10 energy. '
+                                f'Enter "attack" or "heal" ')
+            if user_select != 'attack' and user_select != 'heal':
+                print(f'\nInvalid input! Try again...')
+        if user_select == 'heal':
+            self.user_robot_heal(current_robot)
+        elif user_select == 'attack':
+            self.user_robot_attack(current_robot)
 
+    def user_robot_heal(self, robot):
+        robot.health += 10
+        if robot.health > 100:
+            print(f'{robot.name} health maxed out!')
+            robot.health = 100
+        else:
+            print(f'\n{robot.name} health now {robot.health}!')
+
+    def user_robot_attack(self, current_robot):
         if len(self.herd.dinosaurs) == 1:
             current_dino = self.herd.dinosaurs[0]
         else:

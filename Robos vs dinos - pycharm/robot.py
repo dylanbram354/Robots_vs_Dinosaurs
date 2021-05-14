@@ -17,14 +17,14 @@ class Robot:
         option_2 = Weapon('rocket launcher', 30, -20)
         option_3 = Weapon('sword', 25, -15)
         options = [option_1, option_2, option_3]
-        print(f"Choose this robot's weapon:")
+        print(f"\nChoose this robot's weapon:\n")
         i = 1
         while i <= len(options):
             print(f"Option {i}: {options[i-1].type}, attack power {options[i-1].attack_power}, energy drain per attack {options[i-1].energy_drain}")
             i += 1
         while True:
             try:
-                user_choice = input('Enter your choice. For Option 1, enter 1. Etc... ')
+                user_choice = input('\nEnter your choice. For Option 1, enter 1. Etc... ')
                 user_choice = int(user_choice) - 1
                 if user_choice >= len(options) or user_choice < 0:
                     user_choice = len(options) - 1
