@@ -38,9 +38,8 @@ class Battlefield:
         current_dino = self.herd.dinosaurs[dino_index]
         current_robot = self.fleet.robots[robot_index]
 
-        print(f'\n{current_dino.type} attacks {current_robot.name}!')
-
-        Dinosaur.attack(current_dino, current_robot)
+        # print(f'\n{current_dino.type} attacks {current_robot.name}!')
+        print("\n" + Dinosaur.attack(current_dino, current_robot))
 
         if current_robot.health <= 0:
             print(f'{current_robot.name} health now depleted! {current_robot.name} OUT!')
@@ -49,7 +48,7 @@ class Battlefield:
             print(f'{current_robot.name} health now {current_robot.health}')
 
         if current_dino.energy <= 0:
-            print(f'{current_dino.name} energy now depleted! {current_dino.name} OUT!')
+            print(f'{current_dino.type} energy now depleted! {current_dino.type} OUT!')
             self.herd.dinosaurs.remove(current_robot)
 
         else:
@@ -62,7 +61,7 @@ class Battlefield:
         current_dino = self.herd.dinosaurs[dino_index]
         current_robot = self.fleet.robots[robot_index]
 
-        print(f'\n{current_robot.name} attacks {current_dino.type}!')
+        print(f'\n{current_robot.name} attacks {current_dino.type} with {current_robot.weapon.type}!')
 
         Robot.attack(current_robot, current_dino)
 
@@ -105,9 +104,6 @@ class Battlefield:
             print('Oops! That number was greater than the maximum allowed. Your fleet has been set to 5 robots.')
             amount_of_robots = 5
         self.fleet.user_fleet(amount_of_robots)
-
-    def user_robot_turn(self):
-        pass
 
     def team_setup(self):
         print(f'\nHere is Team Robot: ')
@@ -160,7 +156,7 @@ class Battlefield:
 
     def user_robot_turn(self):
         if len(self.fleet.robots) == 1:
-            current_robot = self.fleet.robots[0].name
+            current_robot = self.fleet.robots[0]
         else:
             while True:
                 robot_input = input('\nWhich robot do you want to use this turn? ')
@@ -192,7 +188,7 @@ class Battlefield:
 
             current_dino = self.herd.dinosaurs[dino_index]
 
-        print(f'\n{current_robot.name} attacks {current_dino.type}!')
+        print(f'\n{current_robot.name} attacks {current_dino.type} with {current_robot.weapon.type}!')
 
         Robot.attack(current_robot, current_dino)
 
@@ -229,6 +225,6 @@ class Battlefield:
                     self.show_team_info()
 
         if len(self.herd.dinosaurs) == 0:
-            print('Robots win!')
+            print('All dinosaurs depleted! Robots win!')
         if len(self.fleet.robots) == 0:
-            print('Dinosaurs win!')
+            print('All robots depleted! Dinosaurs win!')

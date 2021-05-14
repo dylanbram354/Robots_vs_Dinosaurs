@@ -1,7 +1,7 @@
 from battlefield import Battlefield
 from robot import Robot
 from fleet import Fleet
-
+from dinosaur import Dinosaur
 
 
 if __name__ == '__main__':
@@ -22,14 +22,6 @@ if __name__ == '__main__':
     if user_choice == 'no':
         print('Thanks for playing!')
 
-    # while user_choice != 'no':
-    #     if user_choice == 'auto':
-    #         Battlefield().run_game()
-    #     elif user_choice == 'robot':
-    #         Battlefield().run_game_team_robots()
-    #     elif user_choice != 'no':
-    #         user_choice = input('Oops! Enter a valid input.')
-    #
-    # print('Thanks for playing!')
+    # Dinosaur('dino', 25).attack(Robot('hi'))
 
 
