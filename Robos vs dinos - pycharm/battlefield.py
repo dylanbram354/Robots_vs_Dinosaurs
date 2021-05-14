@@ -94,13 +94,13 @@ class Battlefield:
     def user_fleet_builder(self):
         while True:
             try:
-                amount_of_robots = input("How many bots do you want on your team? Max 5 ")
+                amount_of_robots = input("How many combatants do you want on each team? Max 5 ")
                 amount_of_robots = int(amount_of_robots)
                 break
             except ValueError:
-                print("Oops! Enter a number from 1 to 5. ")
+                print("\nOops! Enter a number from 1 to 5. ")
         if amount_of_robots > 5:
-            print('Oops! That number was greater than the maximum allowed. Your fleet has been set to 5 robots.')
+            print('\nOops! That number was greater than the maximum allowed. Your fleet has been set to 5 robots.')
             amount_of_robots = 5
         self.fleet.user_fleet(amount_of_robots)
 
@@ -112,15 +112,16 @@ class Battlefield:
             weapon = self.fleet.robots[i].weapon.type
             attack_power = self.fleet.robots[i].weapon.attack_power
             energy_drain = self.fleet.robots[i].weapon.energy_drain
-            print(f'Robot {i + 1}: {name}, {weapon}, attack power {attack_power}, energy drain per attack {energy_drain}')
+            print(f'{name}: {weapon}, attack power {attack_power}, energy drain per attack {energy_drain}')
             i += 1
-        while True:
-            try:
-                dino_amount = input('\nHow many dinosaurs do you want to fight? ')
-                dino_amount = int(dino_amount)
-                break
-            except ValueError:
-                print('Oops! Enter the number of dinosaurs you want to fight. ')
+        dino_amount = len(self.fleet.robots)
+        # while True:
+        #     try:
+        #         dino_amount = input('\nHow many dinosaurs do you want to fight? ')
+        #         dino_amount = int(dino_amount)
+        #         break
+        #     except ValueError:
+        #         print('Oops! Enter the number of dinosaurs you want to fight. ')
         self.herd.create_herd_custom_amount(dino_amount)
         print('\nHere is Team Dinosaur: ')
         i = 0
@@ -140,8 +141,10 @@ class Battlefield:
             attack_power = self.fleet.robots[i].weapon.attack_power
             health = self.fleet.robots[i].health
             power_level = self.fleet.robots[i].power_level
+            energy_drain = self.fleet.robots[i].weapon.energy_drain
             print(
-                f'Robot {i + 1}: {name}, {weapon}, attack power {attack_power}, health {health}, power level {power_level}')
+                f'Robot {i + 1}: {name}, {weapon}, attack power {attack_power}, health {health}, '
+                f'power level {power_level}, energy drain per attack {energy_drain}')
             i += 1
         print('\nHere is Team Dinosaur: ')
         i = 0
@@ -150,7 +153,9 @@ class Battlefield:
             attack_power = self.herd.dinosaurs[i].attack_power
             health = self.herd.dinosaurs[i].health
             energy = self.herd.dinosaurs[i].energy
-            print(f'{name}: attack power {attack_power}, health {health}, energy {energy}')
+            energy_drain = self.herd.dinosaurs[i].energy_drain
+            print(f'{name}: attack power {attack_power}, health {health}, energy {energy}, '
+                  f'energy drain per attack {energy_drain}')
             i += 1
 
     def user_robot_turn(self):
@@ -173,7 +178,8 @@ class Battlefield:
         user_select = ''
         while user_select != 'attack' and user_select != 'heal':
             user_select = input(f'\nWould you like to attack a dinosaur, or heal your robot? '
-                                f'Healing adds a random number of health points from 5-20, but it costs 15 energy! '
+                                f'Healing adds a random number of health points from 5-20 (up to max health), '
+                                f'but it costs 15 power level! '
                                 f'Enter "attack" or "heal" ')
             if user_select != 'attack' and user_select != 'heal':
                 print(f'\nInvalid input! Try again...')
@@ -202,15 +208,15 @@ class Battlefield:
             current_dino = self.herd.dinosaurs[0]
         else:
             while True:
-                dino_index = input('\nWhich dinosaur do you want to attack? Enter their Dinosaur Number ')
+                dino_index = input('\nWhich dinosaur do you want to attack? Enter their Dinosaur Number: ')
                 try:
                     dino_index = int(dino_index) - 1
                     if dino_index >= len(self.herd.dinosaurs):
                         dino_index = len(self.herd.dinosaurs) - 1
-                        print(f"Oops! No dinosaur with that number. Dinosaur {dino_index + 1} selected by default.")
+                        print(f"\nOops! No dinosaur with that number. Dinosaur {dino_index + 1} selected by default.")
                     break
                 except ValueError:
-                    print("Oops! Make sure to enter the number corresponding to the dino you want to attack. "
+                    print("\nOops! Make sure to enter the number corresponding to the dino you want to attack. "
                           "Try again...")
 
             current_dino = self.herd.dinosaurs[dino_index]
@@ -240,15 +246,15 @@ class Battlefield:
         user_ready = 'yes'
         while len(self.herd.dinosaurs) > 0 and len(self.fleet.robots) > 0 and user_ready == 'yes':
             self.user_robot_turn()
-            user_ready = input('\nReady for next turn? Enter "yes" when ready ')
+            user_ready = input('\nReady to continue? Enter "yes" when ready ')
             while user_ready != "yes":
-                user_ready = input('\nReady for next turn? Enter "yes" when ready ')
+                user_ready = input('\nReady to continue? Enter "yes" when ready ')
             if len(self.herd.dinosaurs) > 0:
                 self.dino_turn()
                 if len(self.fleet.robots) > 0:
-                    user_ready = input('\nReady for next turn? Enter "yes" when ready ')
+                    user_ready = input('\nReady to continue? Enter "yes" when ready ')
                     while user_ready != "yes":
-                        user_ready = input('\nReady for next turn? Enter "yes" when ready ')
+                        user_ready = input('\nReady to continue? Enter "yes" when ready ')
                     self.show_team_info()
 
         if len(self.herd.dinosaurs) == 0:
