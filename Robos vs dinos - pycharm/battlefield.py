@@ -189,6 +189,12 @@ class Battlefield:
             robot.health = 100
         else:
             print(f'\n{robot.name} health now {robot.health}!')
+        robot.power_level -= 10
+        if robot.power_level > 0:
+            print(f'\n{robot.name} power level now {robot.power_level}!')
+        elif robot.power_level <= 0:
+            print(f'{robot.name} power level now depleted! {robot.name} OUT!')
+            self.fleet.robots.remove(robot)
 
     def user_robot_attack(self, current_robot):
         if len(self.herd.dinosaurs) == 1:
