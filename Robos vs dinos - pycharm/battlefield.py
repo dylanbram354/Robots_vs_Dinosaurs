@@ -207,20 +207,14 @@ class Battlefield:
         if len(self.herd.dinosaurs) == 1:
             current_dino = self.herd.dinosaurs[0]
         else:
-            while True:
-                dino_index = input('\nWhich dinosaur do you want to attack? Enter their Dinosaur Number: ')
-                try:
-                    dino_index = int(dino_index) - 1
-                    if dino_index >= len(self.herd.dinosaurs):
-                        dino_index = random.randint(0, len(self.herd.dinosaurs) - 1)
-                        print(f"\nOops! No dinosaur with that number. Dinosaur {dino_index} "
-                              f"randomly selected.")
-                    break
-                except ValueError:
-                    print("\nOops! Make sure to enter the number corresponding to the dino you want to attack. "
-                          "Try again...")
-
-            current_dino = self.herd.dinosaurs[dino_index]
+            current_dino = ''
+            while current_dino == '':
+                dino_name = 'Dinosaur ' + input('\nWhich dinosaur do you want to attack? Enter their Dinosaur Number: ')
+                i = 0
+                while i < len(self.herd.dinosaurs):
+                    if self.herd.dinosaurs[i].type == dino_name:
+                        current_dino = self.herd.dinosaurs[i]
+                    i += 1
 
         print(f'\n{current_robot.name} attacks {current_dino.type} with {current_robot.weapon.type}!')
 
