@@ -215,6 +215,8 @@ class Battlefield:
                     if self.herd.dinosaurs[i].type == dino_name:
                         current_dino = self.herd.dinosaurs[i]
                     i += 1
+                if current_dino == '':
+                    print(f'\nInvalid input! Try again...')
 
         print(f'\n{current_robot.name} attacks {current_dino.type} with {current_robot.weapon.type}!')
 
